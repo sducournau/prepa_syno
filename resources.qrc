@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/prepa_syno" >
+        <file>icon.png</file>
+    </qresource>
+</RCC>

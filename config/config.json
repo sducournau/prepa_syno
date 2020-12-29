@@ -1,0 +1,67 @@
+{
+   "LAYERS_NAME":{
+      "SITES_SUPPORTS":{
+         "nom":"sites_supports",
+         "type":"main"
+      },
+      "CONTOURS_COMMUNES":{
+         "nom":"contours_communes",
+         "type":"zone"
+      },
+      "ZONE_DE_PB":{
+         "nom":"zone_de_pb",
+         "type":"zone"
+      },
+      "ZONE_DE_PA":{
+         "nom":"zone_de_pa",
+         "type":"zone"
+      },
+      "ZONE_DE_PM":{
+         "nom":"zone_de_pm",
+         "type":"zone"
+      },
+      "ZONE_DE_NRO":{
+         "nom":"zone_de_nro",
+         "type":"zone"
+      },
+      "POINT_PB":{
+         "nom":"point_pb",
+         "type":"maj_geom_pf, maj_geom_all"
+      },
+      "POINT_PA":{
+         "nom":"point_pa",
+         "type":"maj_geom_pf, maj_geom_all"
+      },
+      "POINT_PEP":{
+         "nom":"point_pep",
+         "type":"maj_geom_pf, maj_geom_all"
+      },
+      "POINT_PM":{
+         "nom":"point_pm",
+         "type":"maj_geom_pf, maj_geom_all"
+      },
+      "POINT_NRO":{
+         "nom":"point_nro",
+         "type":"maj_geom_pf, maj_geom_all"
+      },
+      "SUPPORTS_RAS_PC":{
+         "nom":"supports_ras_pc",
+         "type":"maj_geom_all"
+      },
+      "CABLE":{
+         "nom":"cable",
+         "type":"maj_geom_pf, maj_geom_all"
+      },
+      "INFRASTRUCTURE":{
+         "nom":"infrastructure",
+         "type":"maj_geom_all"
+      },
+      "RBAL":{
+         "nom":"rbal",
+         "type":"maj_geom_pf, maj_geom_all"
+      }
+   },
+   "GROUP_NAME":"ETUDES_AERIENNES",
+   "GESTIONNAIRE":"ATHD",
+   "DIR_OUTPUT":"C:\\Users\\SDUCOU~1.CIR\\AppData\\Local\\Temp"
+}

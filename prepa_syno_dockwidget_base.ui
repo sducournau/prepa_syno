@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PrepaSynoDockWidgetBase</class>
+ <widget class="QDockWidget" name="PrepaSynoDockWidgetBase">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>350</width>
+    <height>362</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>350</width>
+    <height>217</height>
+   </size>
+  </property>
+  <property name="baseSize">
+   <size>
+    <width>350</width>
+    <height>200</height>
+   </size>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDockWidget {
+    border: 1px solid white;
+	
+}	
+
+QDockWidget::title {
+    text-align: left; /* align the text to the left */
+    padding-bottom:2px;
+    padding-top:2px;
+    padding-left: 10px;
+}
+
+QDockWidget::close-button, QDockWidget::float-button {
+    border: 1px solid transparent;
+    background: darkgray;
+    padding: 0px;
+}
+
+QDockWidget::close-button:hover, QDockWidget::float-button:hover {
+    background: gray;
+}
+
+QDockWidget::close-button:pressed, QDockWidget::float-button:pressed {
+    padding: 1px -1px -1px 1px;
+}
+
+
+QScrollBar:vertical {
+border: none;
+background: transparent;
+width:10px;
+
+}
+QScrollBar::handle:vertical {
+border: none;
+background: #bdc3c7;
+width:5px;
+
+}
+
+QScrollBar::add-line:vertical {
+background: transparent;
+height: 5px;
+subcontrol-position: bottom;
+subcontrol-origin: margin;
+}
+QScrollBar::sub-line:vertical {
+background: transparent;
+height: 5px;
+subcontrol-position: top;
+subcontrol-origin: margin;
+}
+
+QScrollBar:horizontal {
+border: none;
+background: transparent;
+width:10px;
+
+}
+QScrollBar::handle:horizontal {
+border: none;
+background: #bdc3c7;
+width:5px;
+
+}
+
+QScrollBar::add-line:horizontal {
+background: transparent;
+height: 5px;
+subcontrol-position: bottom;
+subcontrol-origin: margin;
+}
+QScrollBar::sub-line:horizontal {
+background: transparent;
+height: 5px;
+subcontrol-position: top;
+subcontrol-origin: margin;
+}
+
+
+QgsCheckableComboBox
+{
+ background-color:#bdc3c7;
+border: 1px solid black;
+border-radius: 3px;
+padding: 3px 3px 3px 3px;
+color:black;
+
+}
+
+QgsCheckableComboBox:hover
+{
+
+border: 2px solid black;
+
+}
+
+QComboBox QAbstractItemView {
+
+  background: #bdc3c7;
+  selection-background-color: #34495e;
+}
+
+
+QgsCheckableComboBox::indicator {
+    border: 2px solid #bdc3c7;
+    background: none;
+}
+
+
+QgsCheckableComboBox::indicator:checked {
+
+    background: #34495e;
+}
+
+QCheckBox::indicator {
+    border: 2px solid #bdc3c7;
+    background: none;
+}
+
+
+QCheckBox::indicator:checked {
+
+    background: white;
+}
+
+
+
+
+</string>
+  </property>
+  <property name="windowTitle">
+   <string>Préparation des données pour le synoptique</string>
+  </property>
+  <widget class="QWidget" name="dockWidgetContents">
+   <property name="styleSheet">
+    <string notr="true">QWidget {
+background: #bdc3c7;;
+
+}</string>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="1">
+     <widget class="QToolBox" name="toolBox">
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>10</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="tabletTracking">
+       <bool>true</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #34495e;
+border-color: rgb(0, 0, 0);
+border-radius:6px;
+padding: 3px 3px 3px 3px;
+color:white;
+
+
+
+QgsCheckableComboBox
+{
+ background-color:#bdc3c7;
+border: 1px solid white;
+border-radius: 3px;
+padding: 3px 3px 3px 3px;
+color:black;
+
+}
+
+QgsCheckableComboBox:hover
+{
+
+border: 2px solid black;
+
+}
+
+QComboBox QAbstractItemView {
+
+  background: #bdc3c7;
+  selection-background-color: #34495e;
+}
+
+
+
+
+</string>
+      </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="page">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>274</width>
+         <height>222</height>
+        </rect>
+       </property>
+       <attribute name="label">
+        <string>MODE D'EMPLOI</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="page_2">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>252</width>
+         <height>222</height>
+        </rect>
+       </property>
+       <attribute name="label">
+        <string>CALCUL</string>
+       </attribute>
+       <widget class="QWidget" name="verticalLayoutWidget_2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>210</width>
+          <height>155</height>
+         </rect>
+        </property>
+        <layout class="QFormLayout" name="formLayout">
+         <item row="2" column="1">
+          <widget class="QgsCheckableComboBox" name="comboBox_select_za_zpm">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>27</height>
+            </size>
+           </property>
+           <property name="baseSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Segoe UI</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="mouseTracking">
+            <bool>true</bool>
+           </property>
+           <property name="tabletTracking">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QgsCheckableComboBox
+{
+ background-color:#bdc3c7;
+border: 1px solid black;
+border-radius: 3px;
+padding: 3px 3px 3px 3px;
+color:black;
+
+}
+
+QgsCheckableComboBox:hover
+{
+
+border: 2px solid black;
+
+}
+
+QComboBox QAbstractItemView {
+
+  background: #bdc3c7;
+  selection-background-color: #34495e;
+	color:black;
+}
+
+
+
+
+</string>
+           </property>
+           <property name="separator">
+            <string>|</string>
+           </property>
+           <property name="defaultText">
+            <string>PMZ</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QCheckBox" name="checkBox_calcul_section">
+           <property name="font">
+            <font>
+             <family>Segoe UI Light</family>
+             <pointsize>8</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string>Calculer les sections</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QCheckBox" name="checkBox_calcul_ordre_pf">
+           <property name="font">
+            <font>
+             <family>Segoe UI Light</family>
+             <pointsize>8</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string>Calculer l'ordre des points fonctionnels</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QgsCheckableComboBox" name="comboBox_select_za_nro">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>27</height>
+            </size>
+           </property>
+           <property name="baseSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Segoe UI</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="mouseTracking">
+            <bool>true</bool>
+           </property>
+           <property name="tabletTracking">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QgsCheckableComboBox
+{
+ background-color:#bdc3c7;
+border: 1px solid black;
+border-radius: 3px;
+padding: 3px 3px 3px 3px;
+color:black;
+
+}
+
+QgsCheckableComboBox:hover
+{
+
+border: 2px solid black;
+
+}
+
+QComboBox QAbstractItemView {
+
+  background: #bdc3c7;
+  selection-background-color: #34495e;
+	color:black;
+}
+
+
+
+
+</string>
+           </property>
+           <property name="separator">
+            <string>|</string>
+           </property>
+           <property name="defaultText">
+            <string>NRO</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QCheckBox" name="checkBox_calcul_accrochage">
+           <property name="font">
+            <font>
+             <family>Segoe UI Light</family>
+             <pointsize>8</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string>Vérifier la topologie</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="page_3">
+       <attribute name="label">
+        <string>CONFIGURATION</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QPushButton" name="pushButton_calcul">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+        <property name="tabletTracking">
+         <bool>true</bool>
+        </property>
+        <property name="toolTip">
+         <string>Calculer</string>
+        </property>
+        <property name="statusTip">
+         <string>Calculer</string>
+        </property>
+        <property name="whatsThis">
+         <string>Calculer</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:hover
+{
+
+background-color: #34495e;
+}
+QPushButton:pressed
+{
+  background-color: #34495e;
+	  border: 2px solid black;
+}
+
+QPushButton
+{
+  border: 0px solid black;
+  border-radius: 6px;
+ background-color: #bdc3c7;
+padding: 3px 3px 3px 3px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../controle_comac/images/run.png</normaloff>../controle_comac/images/run.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_save">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+        <property name="tabletTracking">
+         <bool>true</bool>
+        </property>
+        <property name="toolTip">
+         <string>Sauvegarder</string>
+        </property>
+        <property name="statusTip">
+         <string>Sauvegarder</string>
+        </property>
+        <property name="whatsThis">
+         <string>Sauvegarder</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:hover
+{
+
+background-color: #34495e;
+}
+QPushButton:pressed
+{
+  background-color: #34495e;
+	  border: 2px solid black;
+}
+
+QPushButton
+{
+  border: 0px solid black;
+  border-radius: 6px;
+ background-color: #bdc3c7;
+padding: 3px 3px 3px 3px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../controle_comac/images/save.png</normaloff>../controle_comac/images/save.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_reset">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+        <property name="tabletTracking">
+         <bool>true</bool>
+        </property>
+        <property name="toolTip">
+         <string>Annuler</string>
+        </property>
+        <property name="statusTip">
+         <string>Annuler</string>
+        </property>
+        <property name="whatsThis">
+         <string>Annuler</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:hover
+{
+
+background-color: #34495e;
+}
+QPushButton:pressed
+{
+  background-color: #34495e;
+	  border: 2px solid black;
+}
+
+QPushButton
+{
+  border: 0px solid black;
+  border-radius: 6px;
+ background-color: #bdc3c7;
+padding: 3px 3px 3px 3px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../controle_comac/images/reset.png</normaloff>../controle_comac/images/reset.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QgsCheckableComboBox</class>
+   <extends>QComboBox</extends>
+   <header>qgscheckablecombobox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
