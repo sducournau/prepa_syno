@@ -22,6 +22,12 @@ from .utils import *
 class iterationCables:
 
     def __init__(self):
+
+        self.options_update = [self.dockwidget.checkBox_calcul_accrochage.checkState(),
+                                self.dockwidget.checkBox_calcul_section.checkState(),
+                                self.dockwidget.checkBox_calcul_ordre_pf.checkState()]
+
+
         self.run()
 
     def sumpfOrder(self, k):
@@ -362,6 +368,34 @@ class iterationCables:
 
         print(str(len(self.features_cable)) + ' sections calculées')
 
+
+    def snapping():
+
+
+        for layer in self.layers:
+            layer_type = self.layers[layer].wkbType()
+            layer_name = self.layers[layer].name()
+
+            output = {}
+
+            if layer_type == 5:
+                alg_params_snapgeometries = {
+                    'BEHAVIOR': 0,
+                    'INPUT': self.layers[layer],
+                    'REFERENCE_LAYER': self.layer_sites_portee,
+                    'TOLERANCE': self.buff_adj,
+                    'OUTPUT': 'TEMPORARY_OUTPUT'
+                }
+                output['alg_params_snapgeometries'] = processing.run('qgis:snapgeometries', alg_params_snapgeometries)
+
+
+                for feature in self.layers[layer].getFeatures():
+                    for feat in output['alg_params_snapgeometries']['OUTPUT'].getFeatures():
+                        if feature['code_id'] == feat['code_id']:
+                            geom_wkt = feat.geometry().asWkt()
+                            feature.setGeometry(QgsGeometry.fromWkt(geom_wkt))
+                            self.layers[layer].updateFeature(feature)
+
     def run(self):
 
 
@@ -377,11 +411,11 @@ class iterationCables:
 
         self.layers_pf['pb']['point_pb'].selectAll()
         self.output_layer_pb = self.layers_pf['pb']['point_pb'].materialize(QgsFeatureRequest().setFilterFids(self.layers_pf['pb']['point_pb'].selectedFeatureIds()))
-        utils.PROJECT.addMapLayer(self.output_layer_pb, True)
+        # utils.PROJECT.addMapLayer(self.output_layer_pb, True)
 
         self.layers_pf['pa']['point_pa'].selectAll()
         self.output_layer_pa = self.layers_pf['pa']['point_pa'].materialize(QgsFeatureRequest().setFilterFids(self.layers_pf['pa']['point_pa'].selectedFeatureIds()))
-        utils.PROJECT.addMapLayer(self.output_layer_pa, True)
+        # utils.PROJECT.addMapLayer(self.output_layer_pa, True)
 
         # except:
         #     print('error loading layers')
@@ -391,7 +425,7 @@ class iterationCables:
 
         self.layer_cable.selectByExpression('"troncon" IN (\'D1\', \'D2\') and "statut" =  \'EN ETUDE\'', QgsVectorLayer.SetSelection)
         self.output_layer_cable = self.layer_cable.materialize(QgsFeatureRequest().setFilterFids(self.layer_cable.selectedFeatureIds()))
-        utils.PROJECT.addMapLayer(self.output_layer_cable, True)
+        # utils.PROJECT.addMapLayer(self.output_layer_cable, True)
         self.output_layer_cable.selectAll()
         layer_cable_selection = self.output_layer_cable.selectedFeatures()
         self.features_cable = sorted(layer_cable_selection, key=lambda f: (f['troncon'],f['origine'],f['extremite']))
@@ -417,6 +451,50 @@ class iterationCables:
         self.orderGroupCablesbyPath()
         self.updateLayers()
 
+
+        self.layer_cable.startEditing()
+
+        if self.options_update[2] == 2:
+            self.layers_pf['pb']['point_pb'].startEditing()
+            self.layers_pf['pa']['point_pa'].startEditing()
+
+
+            fieldnames = ['za_zpa']
+            fieldkeys = []
+            for field in fieldnames:
+                fieldkeys.append(self.layers_pf['pa']['point_pa'].fields().indexFromName(field))
+
+            for feature in self.output_layer_pa.getFeatures():
+                for feat in self.layers_pf['pa']['point_pa'].getFeatures():
+                    if feat['code_id'] == feature['code_id']:
+                        for i, field in enumerate(fieldnames):
+                            self.layers_pf['pa']['point_pa'].changeAttributeValue(feat.id(), fieldkeys[i],  str(feature[field]))
+
+
+
+            fieldnames = ['za_zpa', 'za_zpb']
+            fieldkeys = []
+            for field in fieldnames:
+                fieldkeys.append(self.layers_pf['pb']['point_pb'].fields().indexFromName(field))
+
+            for feature in self.output_layer_pb.getFeatures():
+                for feat in self.layers_pf['pb']['point_pb'].getFeatures():
+                    if feat['code_id'] == feature['code_id']:
+                        for i, field in enumerate(fieldnames):
+                            self.layers_pf['pb']['point_pb'].changeAttributeValue(feat.id(), fieldkeys[i],  str(feature[field]))
+
+        if self.options_update[1] == 2:
+            fieldnames = ['section']
+            fieldkeys = []
+            for field in fieldnames:
+                fieldkeys.append(self.layer_cable.fields().indexFromName(field))
+
+            for feature in self.output_layer_cable.getFeatures():
+                for feat in self.layer_cable.getFeatures():
+                    if feat['code_id'] == feature['code_id']:
+                        for i, field in enumerate(fieldnames):
+
+                            self.layer_cable.changeAttributeValue(feat.id(), fieldkeys[i],  str(feature[field]))
 
 
 

@@ -261,6 +261,9 @@ class PrepaSyno:
                 # Create the dockwidget (after translation) and keep reference
                 self.dockwidget = PrepaSynoDockWidget()
 
+            self.populate = populateComboBox(self.dockwidget)
+
+
             icon = QtGui.QIcon(os.path.join(DIR_PLUGIN,  "images/run.png"))
             self.dockwidget.pushButton_calcul.setIcon(icon)
 
@@ -272,7 +275,8 @@ class PrepaSyno:
             icon = QtGui.QIcon(os.path.join(DIR_PLUGIN,  "images/reset.png"))
             self.dockwidget.pushButton_reset.setIcon(icon)
 
-
+            self.dockwidget.tabs.currentChanged.connect(self.populate.onChange_tab)
+            self.dockwidget.comboBox_select_za_nro.currentIndexChanged.connect(self.populate.populate_za_zpm)
 
             self.dockwidget.pushButton_calcul.clicked.connect(partial(self.managerTask,'Mise à jour'))
             self.dockwidget.pushButton_save.clicked.connect(self.save)
