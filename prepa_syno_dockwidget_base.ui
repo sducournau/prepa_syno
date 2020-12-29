@@ -166,7 +166,7 @@ background: #bdc3c7;;
    </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="1">
-     <widget class="QToolBox" name="toolBox">
+     <widget class="QToolBox" name="tabs">
       <property name="font">
        <font>
         <family>Segoe UI</family>
@@ -222,7 +222,7 @@ QComboBox QAbstractItemView {
 </string>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page">
        <property name="geometry">

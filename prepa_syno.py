@@ -96,7 +96,12 @@ class PrepaSyno:
 
     def managerTask(self, task_name):
 
-        iterationCables()
+
+        self.task_start = FilterLayers('Filtrer les couches', self.dockwidget, 'start')
+        self.task_end = FilterLayers('Filtrer les couches', self.dockwidget, 'end')
+        QgsApplication.taskManager().addTask(self.task_start)
+
+        iterationCables('Calcul en cours', self.dockwidget)
 
 
         for layer in iface.mapCanvas().layers():

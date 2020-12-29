@@ -13,14 +13,14 @@ import tempfile
 class FilterLayers(QgsTask):
 
 
-    def __init__(self,description, dockwidget,action, name):
+    def __init__(self,description, dockwidget,action):
 
         QgsTask.__init__(self, description)
 
         self.exception = None
         self.dockwidget = dockwidget
         self.action = action
-        self.name = name
+
 
 
     def run(self):
@@ -30,32 +30,27 @@ class FilterLayers(QgsTask):
 
 
             if self.action == 'start':
-                if 'comac' in self.name:
-                    selected_za_nro = self.dockwidget.comboBox_comac_select_za_nro.checkedItems()
-                    selected_za_zpm = self.dockwidget.comboBox_comac_select_za_zpm.checkedItems()
-                    selected_etude = self.dockwidget.comboBox_comac_select_etude.checkedItems()
-                if 'capft' in self.name:
-                    selected_za_nro = self.dockwidget.comboBox_capft_select_za_nro.checkedItems()
-                    selected_za_zpm = self.dockwidget.comboBox_capft_select_za_zpm.checkedItems()
-                    selected_etude = self.dockwidget.comboBox_capft_select_etude.checkedItems()
+
+                selected_za_nro = self.dockwidget.comboBox_select_za_nro.checkedItems()
+                selected_za_zpm = self.dockwidget.comboBox_select_za_zpm.checkedItems()
+
+
 
                 filter_za_nro = '"za_nro" IN (\'' + '\',\''.join(selected_za_nro)  + '\')'
                 filter_za_zpm = '"za_zpm" IN (\'' + '\',\''.join(selected_za_zpm)  + '\')'
-                filter_etude = '"Etude" IN (\'' + '\',\''.join(selected_etude)  + '\')'
+
 
 
                 for layer in self.layers:
 
 
-                    if ('nro' in layer.name() and len(selected_za_nro) > 0) or (len(selected_za_nro) > 0 and len(selected_za_zpm) < 1 and len(selected_etude) < 1):
+                    if ('nro' in layer.name() and len(selected_za_nro) > 0) or (len(selected_za_nro) > 0 and len(selected_za_zpm) < 1):
                         layer.setSubsetString(filter_za_nro)
 
                     elif len(selected_za_zpm) > 0:
                         layer.setSubsetString(filter_za_zpm)
 
-                if len(selected_etude) > 0:
-                    layer = PROJECT.mapLayersByName(self.name)[0]
-                    layer.setSubsetString(filter_etude)
+
 
             if self.action == 'end':
                 for layer in self.layers:
@@ -272,125 +267,54 @@ class populateComboBox:
 
     def onChange_tab(self, i):
         if i == 1:
-            self.populate_za_nro('appuis_comac')
-            self.populate_za_zpm('appuis_comac')
-            self.populate_etudes('appuis_comac')
-
-
-        if i == 2:
-            self.populate_za_nro('appuis_capft')
-            self.populate_za_zpm('appuis_capft')
-            self.populate_etudes('appuis_capft')
-
-
-    def populate_za_nro(self, name):
-
-        try:
-            list_za_nro = []
-
-            layer = PROJECT.mapLayersByName(name)[0]
-            idx = layer.fields().indexFromName('za_nro')
-            print(name, layer, idx)
-            for feature in layer.getFeatures():
-
-                if feature.attributes()[idx] not in list_za_nro:
-                    list_za_nro.append(feature.attributes()[idx])
-
-            list_za_nro = sorted(list_za_nro)
-            if 'comac' in name:
-                self.dockwidget.comboBox_comac_select_za_nro.clear()
-                self.dockwidget.comboBox_comac_select_za_nro.addItems(list_za_nro)
-
-            if 'capft' in name:
-                self.dockwidget.comboBox_capft_select_za_nro.clear()
-                self.dockwidget.comboBox_capft_select_za_nro.addItems(list_za_nro)
-
-        except:
-            iface.messageBar().pushMessage(
-                "Error", "Couche manquante : " + name,
-                level=Qgis.Info, duration=5)
-
-    def populate_za_zpm(self, name):
-
-        try:
-
-            list_za_zpm = []
-            if 'comac' in name:
-                selected_za_nro = self.dockwidget.comboBox_comac_select_za_nro.checkedItems()
-            if 'capft' in name:
-                selected_za_nro = self.dockwidget.comboBox_capft_select_za_nro.checkedItems()
-
-            layer = PROJECT.mapLayersByName(name)[0]
-            idx = layer.fields().indexFromName('za_zpm')
-
-            if len(selected_za_nro) < 1:
-                layer.selectAll()
-                layer_selection = layer.selectedFeatures()
-            else:
-                layer.selectByExpression('"za_nro" IN (\'' + '\',\''.join(selected_za_nro)  + '\')', QgsVectorLayer.SetSelection)
-                layer_selection = layer.selectedFeatures()
-
-            for feature in layer_selection:
-                if feature.attributes()[idx] not in list_za_zpm:
-                    list_za_zpm.append(feature.attributes()[idx])
-
-            layer.removeSelection()
-            list_za_zpm = sorted(list_za_zpm)
-            if 'comac' in name:
-                self.dockwidget.comboBox_comac_select_za_zpm.clear()
-                self.dockwidget.comboBox_comac_select_za_zpm.addItems(list_za_zpm)
-            if 'capft' in name:
-                self.dockwidget.comboBox_capft_select_za_zpm.clear()
-                self.dockwidget.comboBox_capft_select_za_zpm.addItems(list_za_zpm)
-
-        except:
-            iface.messageBar().pushMessage(
-                "Error", "Couche manquante : " + name,
-                level=Qgis.Info, duration=5)
+            self.populate_za_nro()
+            self.populate_za_zpm()
 
 
 
-    def populate_etudes(self, name):
-
-        try:
-            list_etudes = []
+    def populate_za_nro(self):
 
 
+        list_za_nro = []
 
-            layer = PROJECT.mapLayersByName(name)[0]
-            idx = layer.fields().indexFromName('Etude')
-            if 'comac' in name:
-                selected_za_nro = self.dockwidget.comboBox_comac_select_za_nro.checkedItems()
-                selected_za_zpm = self.dockwidget.comboBox_comac_select_za_zpm.checkedItems()
-            if 'capft' in name:
-                selected_za_nro = self.dockwidget.comboBox_capft_select_za_nro.checkedItems()
-                selected_za_zpm = self.dockwidget.comboBox_capft_select_za_zpm.checkedItems()
+        layer = PROJECT.mapLayersByName(LAYERS_NAME['ZONE_DE_NRO']['nom'])[0]
+        idx = layer.fields().indexFromName('za_nro')
+
+        for feature in layer.getFeatures():
+
+            if feature.attributes()[idx] not in list_za_nro:
+                list_za_nro.append(feature.attributes()[idx])
+
+        list_za_nro = sorted(list_za_nro)
+
+        self.dockwidget.comboBox_select_za_nro.clear()
+        self.dockwidget.comboBox_select_za_nro.addItems(list_za_nro)
 
 
-            if len(selected_za_nro) < 1 and len(selected_za_zpm) < 1:
-                layer.selectAll()
-                layer_selection = layer.selectedFeatures()
-            elif len(selected_za_nro) > 0 and len(selected_za_zpm) < 1:
-                layer.selectByExpression('"za_nro" IN (\'' + '\',\''.join(selected_za_nro)  + '\')', QgsVectorLayer.SetSelection)
-                layer_selection = layer.selectedFeatures()
-            elif len(selected_za_nro) > 0 and len(selected_za_zpm) > 0:
-                layer.selectByExpression('"za_zpm" IN (\'' + '\',\''.join(selected_za_zpm)  + '\')', QgsVectorLayer.SetSelection)
-                layer_selection = layer.selectedFeatures()
+    def populate_za_zpm(self):
 
-            for feature in layer_selection:
-                if feature.attributes()[idx] not in list_etudes:
-                    list_etudes.append(feature.attributes()[idx])
 
-            layer.removeSelection()
-            list_etudes = sorted(list_etudes)
-            if 'comac' in name:
-                self.dockwidget.comboBox_comac_select_etude.clear()
-                self.dockwidget.comboBox_comac_select_etude.addItems(list_etudes)
-            if 'capft' in name:
-                self.dockwidget.comboBox_capft_select_etude.clear()
-                self.dockwidget.comboBox_capft_select_etude.addItems(list_etudes)
+        list_za_zpm = []
 
-        except:
-            iface.messageBar().pushMessage(
-                "Error", "Couche manquante : " + name,
-                level=Qgis.Info, duration=5)
+        selected_za_nro = self.dockwidget.comboBox_select_za_nro.checkedItems()
+
+
+        layer = PROJECT.mapLayersByName(LAYERS_NAME['ZONE_DE_PM']['nom'])[0]
+        idx = layer.fields().indexFromName('za_zpm')
+
+        if len(selected_za_nro) < 1:
+            layer.selectAll()
+            layer_selection = layer.selectedFeatures()
+        else:
+            layer.selectByExpression('"za_nro" IN (\'' + '\',\''.join(selected_za_nro)  + '\')', QgsVectorLayer.SetSelection)
+            layer_selection = layer.selectedFeatures()
+
+        for feature in layer_selection:
+            if feature.attributes()[idx] not in list_za_zpm:
+                list_za_zpm.append(feature.attributes()[idx])
+
+        layer.removeSelection()
+        list_za_zpm = sorted(list_za_zpm)
+
+        self.dockwidget.comboBox_select_za_zpm.clear()
+        self.dockwidget.comboBox_select_za_zpm.addItems(list_za_zpm)

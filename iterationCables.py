@@ -21,8 +21,11 @@ from .utils import *
 
 class iterationCables:
 
-    def __init__(self):
+    def __init__(self,description, dockwidget):
 
+        # QgsTask.__init__(self, description)
+        self.exception = None
+        self.dockwidget = dockwidget
         self.options_update = [self.dockwidget.checkBox_calcul_accrochage.checkState(),
                                 self.dockwidget.checkBox_calcul_section.checkState(),
                                 self.dockwidget.checkBox_calcul_ordre_pf.checkState()]
@@ -118,10 +121,11 @@ class iterationCables:
 
                 self.layer_sites.selectByExpression('"type" = \'IMB\'', QgsVectorLayer.SetSelection)
                 selection_imb = self.layer_sites.selectedFeatures()
-                for feat in selection_imb:
-                    if selection_pt_pf[0].geometry().intersects(feat.geometry()):
-                        imb = 1
-                        break
+                if len(selection_pt_pf) > 0:
+                    for feat in selection_imb:
+                        if selection_pt_pf[0].geometry().intersects(feat.geometry()):
+                            imb = 1
+                            break
 
                 feats = [feat for feat in self.layer_rbal.getFeatures()]
                 for feat in feats:
@@ -452,7 +456,7 @@ class iterationCables:
         self.updateLayers()
 
 
-        self.layer_cable.startEditing()
+
 
         if self.options_update[2] == 2:
             self.layers_pf['pb']['point_pb'].startEditing()
@@ -484,6 +488,9 @@ class iterationCables:
                             self.layers_pf['pb']['point_pb'].changeAttributeValue(feat.id(), fieldkeys[i],  str(feature[field]))
 
         if self.options_update[1] == 2:
+            self.layer_cable.startEditing()
+
+
             fieldnames = ['section']
             fieldkeys = []
             for field in fieldnames:
